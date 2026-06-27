@@ -5,16 +5,19 @@ Every release should include `checksums.txt`.
 Download the asset for your platform and `checksums.txt` into the same
 directory.
 
+The macOS/Linux installer performs this check automatically before copying the
+binary into the install directory.
+
 ## macOS And Linux
 
 ```bash
-shasum -a 256 -c checksums.txt
+grep 'specability-core_<version>_<platform>_<arch>' checksums.txt | shasum -a 256 -c -
 ```
 
 Or:
 
 ```bash
-sha256sum -c checksums.txt
+grep 'specability-core_<version>_<platform>_<arch>' checksums.txt | sha256sum -c -
 ```
 
 The command should report `OK` for the downloaded archive.

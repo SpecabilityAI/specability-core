@@ -17,7 +17,19 @@ The complete source code and advanced method packs are developed privately.
 
 ## Install
 
-Download the latest release for your platform from
+macOS and Linux:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/SpecabilityAI/specability-core/main/install.sh | sh
+```
+
+To install a specific preview:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/SpecabilityAI/specability-core/main/install.sh | sh -s -- --version v0.1.0-preview.1
+```
+
+Windows users can download the zip from
 [GitHub Releases](https://github.com/SpecabilityAI/specability-core/releases).
 
 Supported preview targets:
@@ -28,15 +40,19 @@ Supported preview targets:
 - Linux arm64: `linux_arm64`
 - Windows x64: `windows_amd64`
 
-See [docs/install.md](docs/install.md) for platform-specific steps.
+See [docs/install.md](docs/install.md) for platform-specific steps, custom
+install directories, and uninstall instructions.
 
 ## Verify A Download
 
 Every release includes `checksums.txt`.
 
 ```bash
-shasum -a 256 -c checksums.txt
+grep 'specability-core_<version>_<platform>_<arch>' checksums.txt | shasum -a 256 -c -
 ```
+
+The macOS/Linux installer downloads `checksums.txt` and verifies the selected
+archive before installing.
 
 See [docs/verify.md](docs/verify.md) for details.
 
