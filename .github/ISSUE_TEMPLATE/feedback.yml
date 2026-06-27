@@ -1,0 +1,53 @@
+name: Workflow feedback
+description: Feedback from a real Specability Core workflow
+title: "[feedback] "
+labels: ["workflow-feedback"]
+body:
+  - type: dropdown
+    id: host
+    attributes:
+      label: Agent host
+      options:
+        - Codex
+        - Claude Code
+        - Gemini CLI
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: workflow
+    attributes:
+      label: Workflow type
+      placeholder: "Example: multi-step refactor, release review, bug fix with tests"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected outcome
+    validations:
+      required: true
+  - type: textarea
+    id: failure
+    attributes:
+      label: Where reliability broke down
+      description: Describe where the agent lost context, over-delegated, skipped evidence, or failed to finish.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence available
+      description: Mention tests, review traces, runtime records, logs, or manual checks. Do not include sensitive content.
+  - type: textarea
+    id: encode
+    attributes:
+      label: What should Specability encode?
+      description: Suggest a playbook, spec, checklist, recovery step, or verification rule.
+  - type: checkboxes
+    id: permission
+    attributes:
+      label: Permission
+      options:
+        - label: This feedback is sanitized and may be used to improve Specability Core.
+          required: true

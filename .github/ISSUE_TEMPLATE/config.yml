@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Partner program
+    url: https://specability.com/partners
+    about: For teams that want closer support on repeated agent workflows.
+  - name: Security report
+    url: mailto:security@specability.com
+    about: Report security-sensitive issues privately.

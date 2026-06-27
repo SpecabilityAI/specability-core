@@ -1,0 +1,48 @@
+name: Workflow request
+description: Request support for a repeatable coding-agent workflow
+title: "[workflow-request] "
+labels: ["workflow-request"]
+body:
+  - type: input
+    id: workflow
+    attributes:
+      label: Workflow name
+      placeholder: "Example: pre-release readiness review"
+    validations:
+      required: true
+  - type: dropdown
+    id: host
+    attributes:
+      label: Agent host
+      options:
+        - Codex
+        - Claude Code
+        - Gemini CLI
+        - Multiple hosts
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current process
+      description: How do you run this workflow today?
+    validations:
+      required: true
+  - type: textarea
+    id: pain
+    attributes:
+      label: Current failure mode
+      description: What repeatedly goes wrong?
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done condition
+      description: How would you know the workflow succeeded?
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: What tests, logs, review artifacts, or checks usually prove the outcome?
