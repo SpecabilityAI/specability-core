@@ -169,7 +169,12 @@ async function main() {
     if (releasePlatform !== "windows") {
       await chmod(destination, 0o755);
     }
-    console.log(`Installed Specability Core ${release.tag_name} for ${releasePlatform}/${releaseArch}.`);
+    console.log(`Installed Specability Core ${release.tag_name} for ${releasePlatform}/${releaseArch}.\n`);
+    console.log("Next steps — activate for your AI coding agent:\n");
+    console.log("  specability install hook --host claude --scope global   # Claude Code");
+    console.log("  specability install hook --host codex  --scope global   # Codex CLI");
+    console.log("  specability install hook --host gemini --scope global   # Gemini CLI\n");
+    console.log("Then open a new session. Run 'specability doctor' to verify.\n");
   } finally {
     rmSync(workDir, { recursive: true, force: true });
   }

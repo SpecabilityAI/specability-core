@@ -82,14 +82,23 @@ the `specability` command.
 
 See [docs/verify.md](docs/verify.md) for details.
 
-## First Check
+## Activate
 
-After installing:
+After installing, register the session-start hook for your AI coding agent:
+
+```bash
+specability install hook --host claude --scope global   # Claude Code
+specability install hook --host codex  --scope global   # Codex CLI
+specability install hook --host gemini --scope global   # Gemini CLI
+```
+
+Then open a new agent session. The hook injects orientation context
+automatically.
+
+## Verify
 
 ```bash
 specability doctor
-specability playbook list
-specability spec list
 ```
 
 ## Feedback
@@ -101,7 +110,7 @@ Use GitHub Issues for:
 
 - Installation or runtime bugs.
 - Real workflow feedback.
-- Requests for new playbooks, specs, or workflow support.
+- Requests for new methodology content or workflow support.
 
 See [docs/feedback.md](docs/feedback.md).
 

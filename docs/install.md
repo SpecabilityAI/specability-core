@@ -162,10 +162,24 @@ Then:
 specability doctor
 ```
 
-## First Commands
+## Activate
+
+After installing, register the session-start hook for your AI coding agent:
+
+```bash
+specability install hook --host claude --scope global   # Claude Code
+specability install hook --host codex  --scope global   # Codex CLI
+specability install hook --host gemini --scope global   # Gemini CLI
+```
+
+Use `--scope project` instead of `--scope global` to activate for a single
+project only.
+
+Then open a new agent session. The hook injects orientation context
+automatically.
+
+## Verify
 
 ```bash
 specability doctor
-specability playbook list
-specability spec list
 ```
