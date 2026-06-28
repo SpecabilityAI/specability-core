@@ -57,11 +57,13 @@ macOS and Linux Homebrew users can install from the Specability tap:
 
 ```bash
 brew tap SpecabilityAI/tap
+brew trust specabilityai/tap
 brew install specability
 ```
 
 The tap formula references the same GitHub Release archives and SHA256
-checksums as the installer script.
+checksums as the installer script. Homebrew 6 requires explicit trust for
+third-party taps before installing formulae from them.
 
 ## Windows PowerShell
 
