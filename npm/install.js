@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const { createHash } = require("node:crypto");
-const { createWriteStream, existsSync, readFileSync, renameSync, rmSync } = require("node:fs");
+const { copyFileSync, createWriteStream, existsSync, readFileSync, rmSync } = require("node:fs");
 const { chmod, mkdtemp } = require("node:fs/promises");
 const { get } = require("node:https");
 const { tmpdir } = require("node:os");
@@ -9,11 +9,11 @@ const { spawnSync } = require("node:child_process");
 
 const repo = process.env.SPECABILITY_REPO || "SpecabilityAI/specability-core";
 const apiBase = process.env.GITHUB_API_URL || "https://api.github.com";
-const packageVersion = JSON.parse(readFileSync(join(__dirname, "..", "package.json"), "utf8")).version;
+const pkg = JSON.parse(readFileSync(join(__dirname, "..", "package.json"), "utf8"));
 const requestedVersion =
   process.env.SPECABILITY_VERSION ||
   process.env.npm_config_specability_version ||
-  `v${packageVersion}`;
+  `v${pkg.binaryVersion || pkg.version}`;
 
 const platformMap = {
   darwin: "darwin",
@@ -110,14 +110,14 @@ function sha256(path) {
 
 function extractArchive(archivePath, workDir, isWindows) {
   if (isWindows) {
+    const psArchive = archivePath.replace(/'/g, "''");
+    const psWorkDir = workDir.replace(/'/g, "''");
     const result = spawnSync("powershell.exe", [
       "-NoProfile",
       "-ExecutionPolicy",
       "Bypass",
       "-Command",
-      "Expand-Archive -LiteralPath $args[0] -DestinationPath $args[1] -Force",
-      archivePath,
-      workDir
+      `Expand-Archive -LiteralPath '${psArchive}' -DestinationPath '${psWorkDir}' -Force`
     ], { stdio: "inherit" });
     if (result.status !== 0) {
       throw new Error("PowerShell Expand-Archive failed.");
@@ -165,8 +165,10 @@ async function main() {
     }
 
     const destination = join(__dirname, "bin", binaryName);
-    renameSync(sourceBinary, destination);
-    await chmod(destination, 0o755);
+    copyFileSync(sourceBinary, destination);
+    if (releasePlatform !== "windows") {
+      await chmod(destination, 0o755);
+    }
     console.log(`Installed Specability Core ${release.tag_name} for ${releasePlatform}/${releaseArch}.`);
   } finally {
     rmSync(workDir, { recursive: true, force: true });

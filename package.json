@@ -1,6 +1,6 @@
 {
   "name": "specability",
-  "version": "0.1.0-preview.3",
+  "version": "0.1.0-preview.4",
   "description": "Free local coding-agent harness distributed as Specability Core.",
   "license": "SEE LICENSE IN LICENSE.md",
   "bin": {
