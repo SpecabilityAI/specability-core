@@ -8,6 +8,9 @@ directory.
 The macOS/Linux installer performs this check automatically before copying the
 binary into the install directory.
 
+The npm and PowerShell installers also verify the selected release archive
+against `checksums.txt`.
+
 ## macOS And Linux
 
 ```bash

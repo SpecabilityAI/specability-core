@@ -32,6 +32,63 @@ curl -fsSL https://raw.githubusercontent.com/SpecabilityAI/specability-core/main
 
 Ensure the target directory is on your `PATH`.
 
+## npm
+
+Node users can install the global launcher:
+
+```bash
+npm install -g specability
+```
+
+The npm package is a thin installer and launcher. By default it downloads the
+Specability Core release that matches the npm package version, verifies
+`checksums.txt`, and then exposes the `specability` command through npm's
+normal global bin path.
+
+To install a specific release through npm:
+
+```bash
+npm install -g specability --specability_version=v0.1.0-preview.2
+```
+
+## Homebrew
+
+macOS and Linux Homebrew users can install from the Specability tap:
+
+```bash
+brew tap SpecabilityAI/tap
+brew install specability
+```
+
+The tap formula references the same GitHub Release archives and SHA256
+checksums as the installer script.
+
+## Windows PowerShell
+
+Recommended PowerShell path:
+
+```powershell
+iwr https://raw.githubusercontent.com/SpecabilityAI/specability-core/main/install.ps1 -OutFile install.ps1
+Get-Content .\install.ps1 -TotalCount 40
+powershell -ExecutionPolicy Bypass -File .\install.ps1
+```
+
+Low-friction one-liner:
+
+```powershell
+iwr https://raw.githubusercontent.com/SpecabilityAI/specability-core/main/install.ps1 -UseB | iex
+```
+
+To install a specific release:
+
+```powershell
+& ([scriptblock]::Create((iwr https://raw.githubusercontent.com/SpecabilityAI/specability-core/main/install.ps1 -UseB))) -Version v0.1.0-preview.2
+```
+
+The default install directory is `%LOCALAPPDATA%\Specability\bin`. Add that
+directory to your user `Path` if PowerShell reports that it is not already on
+`PATH`. The installer does not silently modify `PATH`.
+
 To uninstall:
 
 ```bash
@@ -43,6 +100,12 @@ Or remove the binary directly:
 ```bash
 rm -f "$HOME/.local/bin/specability"
 rm -f /usr/local/bin/specability
+```
+
+PowerShell uninstall:
+
+```powershell
+& ([scriptblock]::Create((iwr https://raw.githubusercontent.com/SpecabilityAI/specability-core/main/install.ps1 -UseB))) -Uninstall
 ```
 
 Manual downloads are available from:
@@ -81,7 +144,7 @@ specability doctor
 
 ## Windows
 
-Download:
+If you prefer manual installation, download:
 
 ```text
 specability-core_<version>_windows_amd64.zip

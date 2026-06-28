@@ -17,11 +17,33 @@ The complete source code and advanced method packs are developed privately.
 
 ## Install
 
-macOS and Linux:
+macOS and Linux install script:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/SpecabilityAI/specability-core/main/install.sh | sh
 ```
+
+Node/npm users:
+
+```bash
+npm install -g specability
+```
+
+Homebrew users:
+
+```bash
+brew tap SpecabilityAI/tap
+brew install specability
+```
+
+Windows PowerShell:
+
+```powershell
+iwr https://raw.githubusercontent.com/SpecabilityAI/specability-core/main/install.ps1 -UseB | iex
+```
+
+See [docs/install.md](docs/install.md) for the review-before-run PowerShell
+path.
 
 To install a specific preview:
 
@@ -29,7 +51,7 @@ To install a specific preview:
 curl -fsSL https://raw.githubusercontent.com/SpecabilityAI/specability-core/main/install.sh | sh -s -- --version v0.1.0-preview.1
 ```
 
-Windows users can download the zip from
+Windows users can also download the zip from
 [GitHub Releases](https://github.com/SpecabilityAI/specability-core/releases).
 
 Supported preview targets:
@@ -40,8 +62,8 @@ Supported preview targets:
 - Linux arm64: `linux_arm64`
 - Windows x64: `windows_amd64`
 
-See [docs/install.md](docs/install.md) for platform-specific steps, custom
-install directories, and uninstall instructions.
+See [docs/install.md](docs/install.md) for platform-specific steps, package
+manager notes, custom install directories, and uninstall instructions.
 
 ## Verify A Download
 
@@ -53,6 +75,9 @@ grep 'specability-core_<version>_<platform>_<arch>' checksums.txt | shasum -a 25
 
 The macOS/Linux installer downloads `checksums.txt` and verifies the selected
 archive before installing.
+
+The npm and PowerShell installers also verify SHA256 checksums before exposing
+the `specability` command.
 
 See [docs/verify.md](docs/verify.md) for details.
 

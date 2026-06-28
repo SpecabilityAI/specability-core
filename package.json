@@ -1,0 +1,43 @@
+{
+  "name": "specability",
+  "version": "0.1.0-preview.3",
+  "description": "Free local coding-agent harness distributed as Specability Core.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bin": {
+    "specability": "npm/bin/specability.js"
+  },
+  "scripts": {
+    "postinstall": "node npm/install.js",
+    "specability:install": "node npm/install.js"
+  },
+  "files": [
+    "npm/install.js",
+    "npm/bin/specability.js",
+    "README.md",
+    "LICENSE.md",
+    "TERMS.md",
+    "SECURITY.md",
+    "CHANGELOG.md",
+    "docs/"
+  ],
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpecabilityAI/specability-core.git"
+  },
+  "homepage": "https://specability.com",
+  "bugs": {
+    "url": "https://github.com/SpecabilityAI/specability-core/issues"
+  }
+}
