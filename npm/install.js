@@ -169,18 +169,25 @@ async function main() {
     if (releasePlatform !== "windows") {
       await chmod(destination, 0o755);
     }
-    console.log(`Installed Specability Core ${release.tag_name} for ${releasePlatform}/${releaseArch}.\n`);
-    console.log("Next steps — activate for your AI coding agent:\n");
-    console.log("  specability install hook --host claude --scope global   # Claude Code");
-    console.log("  specability install hook --host codex  --scope global   # Codex CLI");
-    console.log("  specability install hook --host gemini --scope global   # Gemini CLI\n");
-    console.log("Then open a new session. Run 'specability doctor' to verify.\n");
+    console.log(`Specability Core ${release.tag_name} installed for ${releasePlatform}/${releaseArch}.\n`);
+    console.log("Next steps:");
+    console.log("  1. Choose the AI coding tool you use, then run one of these commands:\n");
+    console.log("     Claude Code:  specability install hook --host claude --scope global");
+    console.log("     Codex CLI:    specability install hook --host codex  --scope global");
+    console.log("     Gemini CLI:   specability install hook --host gemini --scope global\n");
+    console.log("  2. Open a new agent session.");
+    console.log("  3. Run `specability doctor` to check the setup.\n");
   } finally {
     rmSync(workDir, { recursive: true, force: true });
   }
 }
 
 main().catch((error) => {
-  console.error(error.message);
+  console.error("Specability Core was not installed.");
+  console.error(`Reason: ${error.message}\n`);
+  console.error("Try this:");
+  console.error("  1. Run `npm install -g specability@latest` again.");
+  console.error("  2. If it still fails, use the platform installer from https://github.com/SpecabilityAI/specability-core/releases.");
+  console.error("  3. Include the full npm error output if you report an issue.\n");
   process.exit(1);
 });

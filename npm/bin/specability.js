@@ -7,8 +7,12 @@ const binaryName = process.platform === "win32" ? "specability.exe" : "specabili
 const binaryPath = join(__dirname, binaryName);
 
 if (!existsSync(binaryPath)) {
-  console.error(`Specability binary is missing: ${binaryPath}`);
-  console.error("Try reinstalling with: npm install -g specability");
+  console.error("Specability is installed through npm, but the Specability Core binary is missing.");
+  console.error(`Expected binary: ${binaryPath}\n`);
+  console.error("Try this:");
+  console.error("  1. Reinstall the package: npm install -g specability@latest");
+  console.error("  2. If reinstalling fails, use the platform installer from https://github.com/SpecabilityAI/specability-core/releases");
+  console.error("  3. Then run: specability doctor\n");
   process.exit(127);
 }
 
@@ -18,7 +22,9 @@ const result = spawnSync(binaryPath, process.argv.slice(2), {
 });
 
 if (result.error) {
-  console.error(result.error.message);
+  console.error("Specability could not start.");
+  console.error(`Reason: ${result.error.message}\n`);
+  console.error("Try reinstalling with: npm install -g specability@latest\n");
   process.exit(1);
 }
 

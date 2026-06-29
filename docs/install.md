@@ -164,7 +164,7 @@ specability doctor
 
 ## Activate
 
-After installing, register the session-start hook for your AI coding agent:
+After installing, choose the AI coding tool you use and activate Specability:
 
 ```bash
 specability install hook --host claude --scope global   # Claude Code
@@ -175,8 +175,8 @@ specability install hook --host gemini --scope global   # Gemini CLI
 Use `--scope project` instead of `--scope global` to activate for a single
 project only.
 
-Then open a new agent session. The hook injects orientation context
-automatically.
+Then open a new agent session. Specability will load its workflow guidance
+automatically when that session starts.
 
 ## Verify
 

@@ -83,14 +83,35 @@ try {
   New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
   Copy-Item -LiteralPath $ExtractedBinary -Destination $BinaryPath -Force
 
-  Write-Host "installed Specability Core $Version to $BinaryPath"
+  Write-Host ""
+  Write-Host "Specability Core $Version installed."
+  Write-Host ""
+  Write-Host "Location:"
+  Write-Host "  $BinaryPath"
 
   $UserPath = [Environment]::GetEnvironmentVariable("Path", "User")
   $MachinePath = [Environment]::GetEnvironmentVariable("Path", "Machine")
   if (((";${UserPath};${MachinePath};") -notlike "*;$InstallDir;*")) {
-    Write-Warning "$InstallDir is not on PATH."
+    Write-Host ""
+    Write-Host "Needs attention:"
+    Write-Host "  This folder is not on PATH yet:"
+    Write-Host "  $InstallDir"
+    Write-Host ""
+    Write-Host "  Add it to your user Path, then open a new PowerShell window."
   }
 
+  Write-Host ""
+  Write-Host "Next steps:"
+  Write-Host "  1. Choose the AI coding tool you use, then run one of these commands:"
+  Write-Host ""
+  Write-Host "     Claude Code:  specability install hook --host claude --scope global"
+  Write-Host "     Codex CLI:    specability install hook --host codex  --scope global"
+  Write-Host "     Gemini CLI:   specability install hook --host gemini --scope global"
+  Write-Host ""
+  Write-Host "  2. Open a new agent session."
+  Write-Host "  3. Run 'specability doctor' to check the setup."
+  Write-Host ""
+  Write-Host "Installed version:"
   & $BinaryPath version
 } finally {
   Remove-Item -LiteralPath $TempDir -Recurse -Force -ErrorAction SilentlyContinue

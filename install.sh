@@ -162,11 +162,31 @@ mkdir -p "$install_dir"
 cp "$tmp/specability" "$install_dir/specability"
 chmod +x "$install_dir/specability"
 
-echo "installed Specability Core $version to $install_dir/specability"
+printf '\nSpecability Core %s installed.\n\n' "$version"
+printf 'Location:\n  %s\n' "$install_dir/specability"
 
 case ":$PATH:" in
   *":$install_dir:"*) ;;
-  *) echo "warning: $install_dir is not on PATH" >&2 ;;
+  *)
+    printf '\nNeeds attention:\n'
+    printf '  This folder is not on PATH yet:\n'
+    printf '  %s\n\n' "$install_dir"
+    printf '  Add it to PATH, then open a new terminal.\n'
+    ;;
 esac
 
+cat <<'EOF'
+
+Next steps:
+  1. Choose the AI coding tool you use, then run one of these commands:
+
+     Claude Code:  specability install hook --host claude --scope global
+     Codex CLI:    specability install hook --host codex  --scope global
+     Gemini CLI:   specability install hook --host gemini --scope global
+
+  2. Open a new agent session.
+  3. Run `specability doctor` to check the setup.
+
+Installed version:
+EOF
 "$install_dir/specability" version || true
