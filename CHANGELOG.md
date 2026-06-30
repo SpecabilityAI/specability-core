@@ -2,6 +2,15 @@
 
 All notable public Specability Core releases are recorded here.
 
+## 0.1.3 - 2026-06-30
+
+- Fixed Windows runtime database initialization for drive-letter paths such as
+  `F:\AIcode\test\.specability\runtime\specability.sqlite`.
+- Runtime database opens now keep the SQLite driver's transaction-lock option
+  without encoding Windows paths as `file://` URI authorities.
+- Windows users who saw `SQL logic error: invalid uri authority` during
+  session-start context loading should upgrade to this release.
+
 ## 0.1.2 - 2026-06-29
 
 - Runtime and memory database initialization now rebuilds stale local schemas
