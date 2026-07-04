@@ -2,6 +2,15 @@
 
 All notable public Specability Core releases are recorded here.
 
+## 0.1.4 - 2026-07-04
+
+- Scan and project-map context no longer treat broad project or documentation
+  READMEs as structured module contracts.
+- Real code modules, package/app containers, and content modules continue to be
+  included in README structure checks.
+- Doctor diagnostics no longer expose embedded content inventory details.
+- No runtime schema migration is included in this release.
+
 ## 0.1.3 - 2026-06-30
 
 - Fixed Windows runtime database initialization for drive-letter paths such as
