@@ -2,6 +2,25 @@
 
 All notable public Specability Core releases are recorded here.
 
+## 0.3.0 - 2026-08-02
+
+- Retrospective is now a dedicated user-controlled workflow. The agent aligns
+  the goal and subject before examining evidence, presents the complete set of
+  candidate outcomes, and confirms each durable action before executing it.
+- Reviewed personal methods can now be saved as private playbooks at an explicit
+  project or global scope. Private identities remain source-qualified and cannot
+  override built-in methodology.
+- Playbook retrieval and SessionStart now use one bounded layered registry for
+  built-in and private sources. Invalid private files fail soft with actionable
+  diagnostics without exposing private bodies or absolute global paths.
+- SessionStart includes a bounded private-playbook index and treats memory as
+  recall-only; retrospective owns proposals for memory and other durable changes.
+- Private playbook saves now work on Windows while preserving the file-sync
+  boundary used before publication.
+- Runtime schema `v7` is unchanged, so this release requires no database
+  migration. Existing host hooks should be reinstalled to activate the new
+  retrospective and SessionStart behavior; user-owned configuration is preserved.
+
 ## 0.2.0 - 2026-07-28
 
 - Session-start guidance now orients the main agent around the user-visible
@@ -53,12 +72,3 @@ All notable public Specability Core releases are recorded here.
 - This is an intentionally forward-only local runtime-state reset for stale
   Specability runtime and memory databases; back up old local runtime data before
   opening it with this release if historical rows must be inspected.
-
-## Unreleased
-
-- Initial public distribution repository scaffold.
-- Preview release process planned for macOS, Linux, and Windows builds.
-- macOS/Linux installer now supports preview release lookup, explicit release
-  tags, checksum verification, custom install directories, and uninstall.
-- npm, Homebrew tap, and Windows PowerShell installer surfaces are now wired to
-  the same GitHub Release assets and checksum contract.
