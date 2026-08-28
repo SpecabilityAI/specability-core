@@ -1,16 +1,20 @@
 # Specability Core
 
-Specability Core is a free local agent harness for coding workflows.
+Specability Core is the free local distribution of the Specability agent
+harness. Its Universal Core is always active, and domain overlays adapt the
+same tool and runtime to different kinds of work. The current preview includes
+the Coding overlay.
 
 This repository distributes free local builds, checksums, release notes,
 installation instructions, and feedback channels for Specability Core.
 
-The complete source code and advanced method packs are developed privately.
+The complete source code and unreleased methodology content are developed
+privately.
 
 ## What You Get
 
 - A local `specability` command-line binary.
-- Coding-focused Starter Pack content.
+- Universal Core methodology plus the Coding domain overlay.
 - Local runtime state stored under your project.
 - Host integration for agent workflows.
 - No automatic upload of source code, runtime state, or workflow data.
@@ -116,8 +120,10 @@ See [docs/feedback.md](docs/feedback.md).
 
 ## Product Line
 
-- **Specability Core**: free local coding-agent harness with the Starter Pack.
-- **Specability [Domain]**: domain expansions shaped with partners.
+- **Specability Core**: the free local harness with Universal Core and released
+  domain overlays in one tool and runtime.
+- **Specability [Domain]**: a product branch, such as Design, delivered as a
+  domain overlay rather than a separate tool.
 - **Specability Enterprise**: paid enterprise customization and deployment.
 
 ## Repository Boundary
@@ -127,4 +133,5 @@ repository.
 
 It contains public documentation, installation guidance, feedback templates, and
 release artifacts. It does not contain the complete source code, full method
-library, Partner Packs, Domain Previews, Domain Products, or Enterprise content.
+library, unreleased domain methodology, internal experiments, or Enterprise
+content.

@@ -2,6 +2,33 @@
 
 All notable public Specability Core releases are recorded here.
 
+## 0.3.2 - 2026-08-28
+
+- Source-verification probes now separate production implementation evidence
+  from test-only negative controls. Path, network target, redirect URL, query
+  construction, command execution, and template-rendering checks no longer let
+  tests establish production safety evidence.
+- `path-boundary`, `network-target-selection`, `redirect-url-boundary`,
+  `query-construction`, and `template-rendering` accept repeatable
+  `--test-source` inputs, so a production file can be verified with tests kept
+  elsewhere.
+- Cleanup verification ignores test files, preventing a test-only cleanup stub
+  from satisfying the cleanup-mechanism criterion.
+- Codex host diagnostics and runtime guidance received reliability and recovery
+  improvements; existing local runtime data remains compatible.
+
+## 0.3.1 - 2026-08-07
+
+- Codex hook installation now uses `hooks.json` as the sole Specability
+  mutation authority. Inline `config.toml` hooks remain host-owned and are
+  inspected read-only for duplicate detection.
+- Existing installations automatically remove retired Specability Stop hook
+  commands that exited without a continuation prompt, while preserving user
+  Stop hooks and unrelated configuration.
+- Codex hook diagnostics now identify unmarked inline SessionStart conflicts
+  and stale Stop registrations with actionable repair guidance.
+
+
 ## 0.3.0 - 2026-08-02
 
 - Retrospective is now a dedicated user-controlled workflow. The agent aligns
