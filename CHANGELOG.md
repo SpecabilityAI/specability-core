@@ -2,6 +2,40 @@
 
 All notable public Specability Core releases are recorded here.
 
+## 0.4.0 - 2026-09-20
+
+- Module README guidance now uses an explicit registry. Agents decide which
+  stable modules need durable orientation, create and maintain the README
+  content, and manage registration through `specability readme`; the CLI no
+  longer scans the repository or generates README prose.
+- Registered module READMEs now describe Role, Owns, Touchpoints, Change Guide,
+  and optional settled Decisions. Mechanical checks return actionable Agent
+  guidance for invalid content, missing files, stale references, and registry
+  repair without claiming semantic correctness.
+- Session-start context now uses only valid registered modules, distinguishes an
+  empty registry from unavailable or unhealthy registrations, and keeps
+  delegated-role guidance out of the main-agent content index.
+- Bounded README work can remain direct and unrecorded, while delegated and
+  release-sensitive work retains recoverable evidence. Assignment work-profile
+  applicability is now frozen at creation time so later catalog changes do not
+  silently alter existing gates.
+- Runtime schema `v8` migrates transactionally to `v9`, preserving existing
+  tasks and assignments while adding frozen work-stage and applicability
+  records. Older binaries refuse the newer schema rather than writing it; back
+  up the runtime database first if downgrade inspection may be needed.
+- Session-start context now omits absolute local paths and memory claim bodies;
+  relevant memories are represented by safe metadata and explicit retrieval
+  commands. Public privacy guidance now distinguishes local Specability
+  processing from context intentionally supplied to the configured AI host.
+- Release packaging, public-mirror checks, credential handling, and the shell,
+  PowerShell, and npm installers now fail closed on mutable releases, unsafe
+  versions, symlinks, permissive temporary files, inconclusive availability
+  checks, and missing cross-channel publish authority.
+- Runtime and global-memory database opens now reject symlinked or unrecognized
+  SQLite targets before configuration or schema writes and safely encode valid
+  URI metacharacters, preserving unrelated local databases instead of opening a
+  different path or attempting an automatic rebuild.
+
 ## 0.3.2 - 2026-08-28
 
 - Source-verification probes now separate production implementation evidence

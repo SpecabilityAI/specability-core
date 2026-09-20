@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-const { createHash } = require("node:crypto");
-const { copyFileSync, createWriteStream, existsSync, readFileSync, rmSync } = require("node:fs");
+const { createHash, randomUUID } = require("node:crypto");
+const { copyFileSync, createWriteStream, existsSync, lstatSync, readFileSync, renameSync, rmSync } = require("node:fs");
 const { chmod, mkdtemp } = require("node:fs/promises");
 const { get } = require("node:https");
 const { tmpdir } = require("node:os");
@@ -131,6 +131,9 @@ function extractArchive(archivePath, workDir, isWindows) {
 }
 
 async function main() {
+  if (!/^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z][0-9A-Za-z.-]*)?$/.test(requestedVersion)) {
+    throw new Error(`Invalid release version: ${requestedVersion}`);
+  }
   const releasePlatform = platformMap[process.platform];
   const releaseArch = archMap[process.arch];
   if (!releasePlatform || !releaseArch) {
@@ -165,9 +168,25 @@ async function main() {
     }
 
     const destination = join(__dirname, "bin", binaryName);
-    copyFileSync(sourceBinary, destination);
-    if (releasePlatform !== "windows") {
-      await chmod(destination, 0o755);
+    let existingDestination;
+    try {
+      existingDestination = lstatSync(destination);
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+    }
+    if (existingDestination && (!existingDestination.isFile() || existingDestination.isSymbolicLink())) {
+      throw new Error(`Refusing to replace a symlink or non-file install destination: ${destination}`);
+    }
+    const stagedDestination = join(__dirname, "bin", `.specability.install.${randomUUID()}`);
+    try {
+      copyFileSync(sourceBinary, stagedDestination);
+      if (releasePlatform !== "windows") {
+        await chmod(stagedDestination, 0o755);
+      }
+      rmSync(destination, { force: true });
+      renameSync(stagedDestination, destination);
+    } finally {
+      rmSync(stagedDestination, { force: true });
     }
     console.log(`Specability Core ${release.tag_name} installed for ${releasePlatform}/${releaseArch}.\n`);
     console.log("Next steps:");

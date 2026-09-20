@@ -37,8 +37,11 @@ Compare the hash to the matching line in `checksums.txt`.
 
 ## Trust Boundary
 
-Specability Core is local software. It should not automatically upload source
-code, runtime state, or workflow data.
+Specability Core is local software and does not independently upload source
+code, runtime state, or workflow data to SpecabilityAI. An enabled SessionStart
+hook returns bounded orientation to the selected AI host, which may send it to
+the configured model provider. Automatic context omits absolute local paths and
+memory claim bodies.
 
 If you observe behavior that appears to violate this boundary, report it through
 the security channel in `SECURITY.md`.

@@ -41,6 +41,10 @@ if (-not $Version) {
   $Version = $Releases[0].tag_name
 }
 
+if ($Version -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z][0-9A-Za-z.-]*)?$') {
+  throw "Invalid release version: $Version"
+}
+
 $Release = Invoke-RestMethod -Uri "$ApiBase/repos/$Repo/releases/tags/$Version" -Headers $Headers
 $AssetName = "specability-core_${Version}_windows_amd64.zip"
 $Asset = $Release.assets | Where-Object { $_.name -eq $AssetName } | Select-Object -First 1
@@ -56,6 +60,7 @@ if (-not $Checksums) {
 
 $TempDir = Join-Path ([System.IO.Path]::GetTempPath()) ("specability-core-install-" + [System.Guid]::NewGuid().ToString("N"))
 New-Item -ItemType Directory -Path $TempDir | Out-Null
+$StagedBinary = $null
 
 try {
   $ArchivePath = Join-Path $TempDir $AssetName
@@ -76,12 +81,20 @@ try {
 
   Expand-Archive -LiteralPath $ArchivePath -DestinationPath $TempDir -Force
   $ExtractedBinary = Join-Path $TempDir "specability.exe"
-  if (-not (Test-Path -LiteralPath $ExtractedBinary)) {
+  $ExtractedItem = Get-Item -LiteralPath $ExtractedBinary -Force -ErrorAction SilentlyContinue
+  if (-not $ExtractedItem -or $ExtractedItem.PSIsContainer -or (($ExtractedItem.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0)) {
     throw "Archive did not contain specability.exe."
   }
 
   New-Item -ItemType Directory -Path $InstallDir -Force | Out-Null
-  Copy-Item -LiteralPath $ExtractedBinary -Destination $BinaryPath -Force
+  $ExistingDestination = Get-Item -LiteralPath $BinaryPath -Force -ErrorAction SilentlyContinue
+  if ($ExistingDestination -and ($ExistingDestination.PSIsContainer -or (($ExistingDestination.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0))) {
+    throw "Refusing to replace a symlink, junction, or non-file install destination: $BinaryPath"
+  }
+  $StagedBinary = Join-Path $InstallDir (".specability.install." + [System.Guid]::NewGuid().ToString("N") + ".exe")
+  Copy-Item -LiteralPath $ExtractedBinary -Destination $StagedBinary
+  Move-Item -LiteralPath $StagedBinary -Destination $BinaryPath -Force
+  $StagedBinary = $null
 
   Write-Host ""
   Write-Host "Specability Core $Version installed."
@@ -114,5 +127,8 @@ try {
   Write-Host "Installed version:"
   & $BinaryPath version
 } finally {
+  if ($StagedBinary) {
+    Remove-Item -LiteralPath $StagedBinary -Force -ErrorAction SilentlyContinue
+  }
   Remove-Item -LiteralPath $TempDir -Recurse -Force -ErrorAction SilentlyContinue
 }

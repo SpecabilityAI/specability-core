@@ -5,8 +5,10 @@ feedback.
 
 ## Local Use
 
-Specability Core runs locally. The CLI does not automatically upload source
-code, runtime state, or workflow data to SpecabilityAI.
+Specability Core runs locally. The CLI does not independently upload source
+code, runtime state, or workflow data to SpecabilityAI. If you enable a host
+hook, its bounded SessionStart orientation is supplied to that AI host and may
+be sent to the host's configured model provider under the provider's terms.
 
 ## Feedback
 

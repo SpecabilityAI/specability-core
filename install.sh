@@ -1,10 +1,18 @@
 #!/usr/bin/env sh
 set -eu
+umask 077
 
 repo="${SPECABILITY_REPO:-SpecabilityAI/specability-core}"
 api_base="${GITHUB_API_URL:-https://api.github.com}/repos/$repo"
 version="${SPECABILITY_VERSION:-}"
 command="install"
+
+validate_version() {
+  if ! printf '%s\n' "$1" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z][0-9A-Za-z.-]*)?$'; then
+    echo "invalid release version: $1" >&2
+    exit 1
+  fi
+}
 
 usage() {
   cat <<'EOF'
@@ -80,9 +88,9 @@ case "$arch" in
   *) echo "unsupported architecture: $arch" >&2; exit 1 ;;
 esac
 
-tmp="${TMPDIR:-/tmp}/specability-core-install.$$"
-mkdir -p "$tmp"
-trap 'rm -rf "$tmp"' EXIT INT TERM
+tmp="$(mktemp -d "${TMPDIR:-/tmp}/specability-core-install.XXXXXX")"
+install_tmp=""
+trap 'rm -rf "$tmp"; if [ -n "$install_tmp" ]; then rm -f "$install_tmp"; fi' EXIT INT TERM
 
 if [ -z "$version" ]; then
   curl -fsSL "$api_base/releases" -o "$tmp/releases.json"
@@ -91,6 +99,7 @@ if [ -z "$version" ]; then
       head -n 1
   )"
 fi
+validate_version "$version"
 
 if [ -z "$version" ]; then
   echo "could not find a Specability Core release" >&2
@@ -153,14 +162,22 @@ fi
 
 tar -xzf "$archive" -C "$tmp"
 
-if [ ! -f "$tmp/specability" ]; then
+if [ -L "$tmp/specability" ] || [ ! -f "$tmp/specability" ]; then
   echo "archive did not contain specability binary" >&2
   exit 1
 fi
 
 mkdir -p "$install_dir"
-cp "$tmp/specability" "$install_dir/specability"
-chmod +x "$install_dir/specability"
+destination="$install_dir/specability"
+if [ -L "$destination" ] || { [ -e "$destination" ] && [ ! -f "$destination" ]; }; then
+  echo "refusing to replace symlink or non-regular install destination: $destination" >&2
+  exit 1
+fi
+install_tmp="$(mktemp "$install_dir/.specability.install.XXXXXX")"
+cp "$tmp/specability" "$install_tmp"
+chmod 0755 "$install_tmp"
+mv -f "$install_tmp" "$destination"
+install_tmp=""
 
 printf '\nSpecability Core %s installed.\n\n' "$version"
 printf 'Location:\n  %s\n' "$install_dir/specability"

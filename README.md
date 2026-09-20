@@ -17,7 +17,10 @@ privately.
 - Universal Core methodology plus the Coding domain overlay.
 - Local runtime state stored under your project.
 - Host integration for agent workflows.
-- No automatic upload of source code, runtime state, or workflow data.
+- No Specability telemetry or independent upload of source code, runtime state,
+  or workflow data. When a host hook is enabled, its bounded SessionStart
+  orientation is returned to the selected AI host and becomes context sent to
+  that host's configured model provider.
 
 ## Install
 
@@ -97,7 +100,10 @@ specability install hook --host gemini --scope global   # Gemini CLI
 ```
 
 Then open a new agent session. Specability will automatically load its concise
-main-agent workflow guidance when that session starts.
+main-agent workflow guidance when that session starts. The generated context
+uses a project label, registered module map, methodology pointers, and memory
+metadata; it omits absolute local paths and memory claim bodies. Review your AI
+host and model provider's data policy before enabling the hook.
 
 ## Verify
 
