@@ -2,6 +2,38 @@
 
 All notable public Specability Core releases are recorded here.
 
+## 0.5.0 - 2026-10-09
+
+- Findings now carry conclusions between agents through the runtime. Architect and
+  evaluator runs record typed findings before finishing; the newest active findings
+  of a task compile into later agent bundles, and `specability task digest` gives the
+  parent the same view without relying on host messages.
+- Findings recorded after a dispatch is prepared now reach the running child: `agent
+  start` and `next` return the new, withdrawn, or superseded findings, and a `done` or
+  `concerns` finish waits once for findings the run has not been shown. Prepared
+  bundles stay immutable.
+- Delegation is easier to get right. `delegate` accepts one flat brief and reports
+  every missing field at once with a filled example, `assignment redispatch` replaces
+  a stalled child, `agent close --reason` closes one without writing its verdicts,
+  unknown roles are rejected with the valid roles, inspection commands accept
+  positional ids, and `task finish` accepts `--summary-stdin`.
+- Advisories record who wrote them and a provenance class. An advisory recorded
+  without a specialist run's agent id is self-attested and no longer satisfies a
+  required independent review.
+- Briefs and outputs are better specified: delegating roles receive a brief-authoring
+  contract, every delegated role receives its own output contract, evaluator bundles
+  carry the task's acceptance, and verification guidance requires a known-good
+  comparison or an identified cause before a failure is called environmental.
+- Fixes: the path-boundary probe covers Node synchronous file APIs, a handoff packet
+  stays valid after the agent starts, `--from-agent` with an unknown agent returns an
+  actionable error, and an explicit `--db` that does not exist is diagnosed instead of
+  silently creating an empty database. `specability doctor` also reports legacy
+  host-agent files and stray runtime databases without changing them.
+- Runtime schema `v9` migrates transactionally to `v11`, adding advisory provenance
+  records. Older binaries refuse the newer schema rather than writing it; back up the
+  runtime database first if downgrade inspection may be needed. Agent bundles built
+  by an earlier version report a compiler-version drift and need to be prepared again.
+
 ## 0.4.0 - 2026-09-20
 
 - Module README guidance now uses an explicit registry. Agents decide which
