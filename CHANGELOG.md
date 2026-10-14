@@ -2,6 +2,28 @@
 
 All notable public Specability Core releases are recorded here.
 
+## 0.5.1 - 2026-10-14
+
+- Review guidance now requires evidence and trade-offs before recommending a
+  reversal of an accepted design. Reviewers distinguish defects, optional
+  alternatives, changed requirements, and missing context; a failed criterion
+  does not itself authorize a redesign.
+- Main agents and delegated coordinators independently check decision-changing
+  objections and record their disposition and reasoning as separate findings.
+  Rejecting a suggested remedy does not clear a failing criterion or replace the
+  reviewer's evidence.
+- Design findings and follow-up briefs preserve decision rationale, invariants,
+  alternatives, and conditions for reconsideration. Repairs address accepted
+  findings, and repeated disagreement without new evidence is escalated rather
+  than driving indefinite rework.
+- Startup guidance stays within its existing context budget while retaining
+  project orientation and memory references. Cross-host context and finding
+  delivery regressions cover these boundaries.
+- This compatible patch changes embedded workflow guidance and documentation;
+  CLI commands, runtime schema, and release channels are unchanged. New sessions
+  and newly prepared handoffs use the updated guidance. Delivery checks do not
+  establish a measured reduction in real-task rework.
+
 ## 0.5.0 - 2026-10-09
 
 - Findings now carry conclusions between agents through the runtime. Architect and
