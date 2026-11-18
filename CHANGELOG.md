@@ -2,6 +2,26 @@
 
 All notable public Specability Core releases are recorded here.
 
+## 0.6.0 - 2026-11-18
+
+- Assignments can carry an optional `intent` explaining why the objective
+  matters. The child sees it beside the objective and can use it to resolve
+  choices the parent left open. Supply it in a delegation brief, a task-plan
+  milestone, or with `assignment create --intent`.
+- Main agents choose when project guidance could change their decision and when
+  a runtime record is useful for recovery, review, or coordination. During
+  debugging, agents use the evidence from each attempt to decide how to proceed
+  and ask for a decision when the choice exceeds their authority.
+- Delegated agents receive the assignment first, with a shorter handoff and a
+  catalog of additional guidance they can consult. Specialist handoffs include
+  the role's reporting requirements directly. Completion reports identify what
+  was verified, assumptions made on the user's behalf, and open decisions.
+- Playbook and spec metadata now loads correctly from Windows CRLF files,
+  keeping already-delivered specialist guidance out of the lookup catalog.
+- On upgrade, the runtime database migrates from schema v11 to v12. Existing
+  assignments keep an empty intent. Back up the runtime database before upgrading
+  if you may need to return to v0.5.1, which cannot open a v12 database.
+
 ## 0.5.1 - 2026-10-14
 
 - Review guidance now requires evidence and trade-offs before recommending a
